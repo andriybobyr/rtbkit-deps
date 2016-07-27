@@ -17,9 +17,9 @@ JOBS?=8
 #determine if node js is used, if using ubuntu 14 it should be disabled
 NODEJS_ENABLED := 0
 
-all: install_node install_boost install_userspacercu install_hiredis install_snappy install_cityhash install_zeromq install_libssh2 install_protobuf install_zookeeper install_redis install_pistache
+all: install_node install_boost install_userspacercu install_hiredis install_snappy install_cityhash install_zeromq install_libssh2 install_protobuf install_zookeeper install_redis install_pistache install_libcurl install_curlpp install_openssl
 
-.PHONY: install_node install_boost install_userspacercu install_hiredis install_snappy install_cityhash install_zeromq install_libssh2 install_protobuf install_zookeeper install_redis install_pistache
+.PHONY: install_node install_boost install_userspacercu install_hiredis install_snappy install_cityhash install_zeromq install_libssh2 install_protobuf install_zookeeper install_redis install_pistache install_libcurl install_curlpp install_openssl
 
 install_node:
 	if [ $(NODEJS_ENABLED) = 1 ]; \
@@ -103,6 +103,14 @@ install_curlpp:
 	rm -f $(TARGET)/include/curlpp/config.win32.h
 	cp curlpp/include/curlpp/config.h $(TARGET)/include/curlpp/config.h
 	echo '#include "curlpp/config.h"' > $(TARGET)/include/curlpp/internal/global.h
+
+install_openssl:
+	cd openssl; \
+	CXX=$(CXX) CC=$(CC) ./configure --prefix $(TARGET); \
+	./config --prefix $(TARGET);
+    make -j$(JOBS) -k; \
+    make -j$(JOBS) -k test \
+	make install
 
 install_zookeeper:
 	cd zookeeper; \
