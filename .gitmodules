@@ -43,3 +43,6 @@
 [submodule "curlpp"]
 	path = curlpp
 	url = https://github.com/mikeburkat/curlpp.git
+[submodule "openssl"]
+	path = openssl
+	url = https://github.com/openssl/openssl.git
